@@ -9,7 +9,13 @@ table tbody tr td.number {text-align: right;}
 .title-in-footer {font-size: 10pt; color: silver; padding: 0 20px;}
 
 .field-label {color:gray; padding-right: 2px;}
+
+/* search */
+.search-hit {padding:10px;}
 .highlight {color: blue; background-color:khaki; padding: 2px;}
+/* don't make the buttons quite so big */
+.button-actions .btn {padding: 0 3px; margin-left: 3px;}
+
 
 .niem-complex-type {padding:5px;}
 .niem-class-name {color:blue; font-size: 14pt; margin-left: 5px;}
