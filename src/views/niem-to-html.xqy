@@ -6,7 +6,7 @@ This XQuery Script Transforms NIEM Core Elements from input XML Schema file into
 an HTML file.
 	     
     Author:Dan McCreary
-    Copyright: 2013 Kelly-McCreary & Associates, All Rights Reserved
+    Copyright: 2016 Kelly-McCreary & Associates, All Rights Reserved
     License: Apache 2.0
     Version History:
 		
@@ -14,28 +14,29 @@ an HTML file.
 declare namespace s="http://niem.gov/niem/structures/2.0";
 declare namespace nc="http://niem.gov/niem/niem-core/2.0";
 declare namespace niem-xsd="http://niem.gov/niem/proxy/xsd/2.0";
-declare namespace xsd="http://www.w3.org/2001/XMLSchema";
+declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare namespace j="http://niem.gov/niem/domains/jxdm/4.0";
 declare namespace i="http://niem.gov/niem/appinfo/2.0";
 
 let $title := 'NIEM Object Classe Types to HTML'
 
 (: This is the file path.  Change this line if you put the file into another location :)
-let $file-path := '/niem-core.xsd'
-let $schema := doc($file-path)/xs:schema
+let $uri := xdmp:get-request-field('uri', '/niem-core.xsd')
+let $schema := doc($uri)/xs:schema
 
 let $set-html-content := xdmp:set-response-content-type("text/html")
 (: setting this to be true slows down the report :)
 let $defs := xs:boolean(xdmp:get-request-field('defs', 'false'))
 
-let $named-complex-types := $schema//xsd:complexType[@name]
-let $element-count := count($schema//xsd:element[@name])
+let $named-complex-types := $schema//xs:complexType[@name]
+let $element-count := count($schema//xs:element[@name])
 let $total-count := count($named-complex-types)
 
 let $content :=
 <div class="content">
     <h4>{$title}</h4>
 
+    <span class="field-label">Schema URI: </span> {$uri}<br/>
     <span class="field-label">View Description: </span>A simple query of the niem-core.xsd file that lists all the named complex types.<br/>
     <span class="field-label">Number of Named Complex Types (ObjectClasses): </span> {$total-count}<br/>
     <span class="field-label">Number of Elements (Object Properties): </span> {format-number($element-count, '#,###')}<br/>
@@ -52,10 +53,10 @@ let $content :=
         (: We first get all the complex elements in the file.  For each complex element create an owl class. :)
         for $complex-element at $count in $named-complex-types
             let $name := string($complex-element/@name)
-            let $parent := string($complex-element//xsd:extension/@base)
+            let $parent := string($complex-element//xs:extension/@base)
             let $parent-suffix := substring-after($parent, ':')
             let $properties := 
-                for $element at $count in $complex-element//xsd:element
+                for $element at $count in $complex-element//xs:element
                     let $name := string($element/@ref)
                     order by $name
                     return $element
@@ -78,7 +79,7 @@ let $content :=
                           }
                       
                       <br/>
-                      Documentation: {$complex-element/xsd:annotation/xsd:documentation/text()}<br/>
+                      Documentation: {$complex-element/xs:annotation/xs:documentation/text()}<br/>
                     </div>
                     
                     <div class="niem-class-description">
@@ -87,7 +88,7 @@ let $content :=
                        let $definition :=
                          if ($defs)
                             then
-                               ('-', $schema/xs:element[@name = $element-name-suffix]/xsd:annotation/xsd:documentation/text())
+                               (' - ', $schema/xs:element[@name = $element-name-suffix]/xs:annotation/xs:documentation/text())
                             else ''
                             
                        return
