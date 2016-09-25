@@ -2,6 +2,7 @@ xquery version "1.0-ml";
 import module namespace style = "http://danmccreary.com/style" at "/modules/style.xqy";
 
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
+declare namespace skos="http://www.w3.org/2004/02/skos/core#";
 
 declare function local:insert-document($uri as xs:string, $doc as element()) {
  if (doc-available($uri))
@@ -24,30 +25,53 @@ let $insert-complex-types :=
    for $complex-type in $named-complex-types
       let $name := $complex-type/@name/string()
       let $uri := '/niem-concepts/complex-types/' || $name || '.xml'
-      let $insert := xdmp:spawn-function(function() {local:insert-document($uri, $complex-type)},
+      
+      let $skos-concept :=
+      <Concept xmlns="http://www.w3.org/2004/02/skos/core#" about="http://release.niem.gov/niem/niem-core/3.0/complex-type/{$name}">
+         <prefLabel>{$name}</prefLabel>
+         <definition>{$complex-type/xs:annotation/xs:documentation/text()}</definition>
+      </Concept>
+      
+      let $insert := xdmp:spawn-function(function() {local:insert-document($uri, $skos-concept)},
               <options xmlns="xdmp:eval">
                <transaction-mode>update-auto-commit</transaction-mode>
              </options>)
            return $uri
 
 let $insert-named-elements :=
-   for $element in $named-complex-types
+   for $element in $named-elements
       let $name := $element/@name/string()
       let $uri := '/niem-concepts/elements/' || $name || '.xml'
-      let $insert := xdmp:spawn-function(function() {local:insert-document($uri, $element)},
+      
+      let $skos-concept :=
+      <Concept xmlns="http://www.w3.org/2004/02/skos/core#" about="http://release.niem.gov/niem/niem-core/3.0/element/{$name}">
+         <prefLabel>{$name}</prefLabel>
+         <definition>{$element/xs:annotation/xs:documentation/text()}</definition>
+      </Concept>
+      
+      let $insert := xdmp:spawn-function(function() {local:insert-document($uri, $skos-concept)},
               <options xmlns="xdmp:eval">
                <transaction-mode>update-auto-commit</transaction-mode>
              </options>)
            return $uri
            
 let $content := 
-
     <div class="content">
        <h4>{$title}</h4>
        Results:<br/>
        Complex Types inserted: {$named-complex-type-count} <br/>
-       Named Elements inserted.{$element-count} <br/>
-       {for $uri in ($insert-complex-types, $insert-complex-types)
+       Named Elements inserted.{format-number($element-count, '#,###')} <br/>
+       
+       <h4>Complex Types</h4>
+       {for $uri in $insert-complex-types
+        return
+           <div>
+              <a href="/views/view-xml.xqy?uri={$uri}">{$uri}</a>
+           </div>
+       }
+       
+       <h4>Simple Elements</h4>
+       {for $uri in $insert-named-elements
         return
            <div>
               <a href="/views/view-xml.xqy?uri={$uri}">{$uri}</a>
