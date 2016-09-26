@@ -4,7 +4,7 @@ import module namespace style = "http://danmccreary.com/style" at "/modules/styl
 declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
 
-let $title := "NIEM Search REsults"
+let $title := "NIEM Search Results"
 
 let $q := xdmp:get-request-field('q')
 
@@ -95,7 +95,7 @@ let $content :=
   <div class="col-md-10">
     {if ($search-results) then
       <div class="search-results">
-        <h4>{$title} Search Results</h4>
+        <h4>{$title}</h4>
         
         { if ($start gt 1)
         then
@@ -139,6 +139,13 @@ let $content :=
                  </div>
                else ()
             }
+            {if ($definition)
+               then
+                 <div>
+                    <span class="field-label">Definition: </span> {$definition}
+                 </div>
+               else ()
+            }
             {if ($broader)
                then
                  <div>
@@ -147,11 +154,11 @@ let $content :=
                else ()
             }
           </div>
-
+         Keyword in Context:
         {
         for $snippet in $result/search:snippet
         return
-          <div class="snippit">
+          <span class="snippit">
           {
           for $match in $snippet/search:match
             let $path := $match/@path
@@ -162,27 +169,35 @@ let $content :=
             let $definition-indicator := ends-with($path, 'definition')
             let $preferred-label-indicator := ends-with($path, 'prefLabel')
           return
-            <div class="match">
-            {
-            if ($definition-indicator) then
-              <span class="field-label">Definition:</span>
-             else
-              ()
-            }
-            {
-            if ($preferred-label-indicator) then
-              ()
-            else
-              for $text-or-highlight in $match/node()
-              return
-                if ($text-or-highlight instance of element()) then
-                  <span class="highlight">{$text-or-highlight/text()}</span>
-                else
-                  $text-or-highlight
-            }
-            </div>
+            <span class="match">
+              
+              {
+               if ($definition-indicator) then
+                 ()
+               else
+                 for $text-or-highlight in $match/node()
+                 return
+                   if ($text-or-highlight instance of element()) then
+                     <span class="highlight">{$text-or-highlight/text()}</span>
+                   else
+                     $text-or-highlight
+               }
+              
+              
+               {
+               if ($preferred-label-indicator) then
+                 ()
+               else
+                 for $text-or-highlight in $match/node()
+                 return
+                   if ($text-or-highlight instance of element()) then
+                     <span class="highlight">{$text-or-highlight/text()}</span>
+                   else
+                     $text-or-highlight
+               }
+            </span>
           }
-          </div>
+          </span>
         }
           <div class="green-url"><a href="/views/view-xml.xqy?uri={$uri}">{$uri}</a></div>
           <div class="button-actions">
