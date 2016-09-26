@@ -174,8 +174,8 @@
 
       <uri-lexicon>true</uri-lexicon>
       <collection-lexicon>true</collection-lexicon>
-      <directory-creation>manual</directory-creation>
-      <maintain-last-modified>false</maintain-last-modified>
+      <directory-creation>automatic</directory-creation>
+      <maintain-last-modified>true</maintain-last-modified>
 <!--
       <fragment-roots>
         <fragment-root>
@@ -419,7 +419,7 @@
       <uri-lexicon>true</uri-lexicon>
       <collection-lexicon>false</collection-lexicon>
       <directory-creation>automatic</directory-creation>
-      <maintain-last-modified>false</maintain-last-modified>
+      <maintain-last-modified>true</maintain-last-modified>
     </database>
     <!--Create Test Modules Database-->
     @ml.test-modules-db-xml
