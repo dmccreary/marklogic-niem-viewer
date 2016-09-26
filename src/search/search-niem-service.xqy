@@ -1,6 +1,8 @@
 xquery version "1.0-ml";
 import module namespace search = "http://marklogic.com/appservices/search" at "/MarkLogic/appservices/search/search.xqy";
 import module namespace style = "http://danmccreary.com/style" at "/modules/style.xqy";
+import module namespace xsu = "http://marklogic.com/xml-schema-utilities" at "/modules/xml-schema-utils.xqy"; 
+
 declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
 
@@ -67,6 +69,15 @@ let $options :=
     </operator>
   </options>
 
+let $exact-match :=
+   cts:search(/,
+      cts:and-query(
+         (cts:directory-query('/niem-concepts/', "infinity"),
+         cts:element-value-query(xs:QName('skos:prefLabel'), $q)
+         )
+        ), "unfiltered"
+      )
+      
 let $search-results := search:search($q, $options, $start, $page-length)
 
 (:
@@ -114,8 +125,22 @@ let $content :=
       }
       
        {format-number($count, '#,###')} {' '} <span class="field-label">hits</span> in {$elapsed-time-in-sec} seconds.<br/>
+        
         <span class="field-label">Query:</span>"{$q}"<br/>
+        
         <a href="{xdmp:get-request-path()}?debug=true&amp;q={$q}">View Debug</a><br/>
+        
+        {if (exists($exact-match))
+           then
+              let $type := xdmp:type($exact-match)
+              return
+              <div class="exact-match">
+                 <span class="field-label">Exact Match:</span>
+                 {xsu:concept-to-html($exact-match/*)}
+              </div>
+           else
+              ()
+        }
       {
       style:prev-next-pagination-links($start, $page-length, $count, $q)
       }
