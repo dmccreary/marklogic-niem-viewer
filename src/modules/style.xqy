@@ -4,6 +4,7 @@ module namespace style = "http://danmccreary.com/style";
 (:
 import module namespace style = "http://danmccreary.com/style" at "/modules/style.xqy";
 :)
+import module namespace util="http://danmccreary.com/util" at "/modules/util.xqy";
 
 declare function style:assemble-page($title as xs:string, $content as element()) as element() {
 
@@ -46,7 +47,7 @@ declare function style:header() as element() {
                 <!-- Main Searchbar -->
                     <form class="navbar-form" role="search" action="/search/search-niem-service.xqy">
                         <div class="input-group">
-                            <input type="search" class="form-control" size="50" placeholder="Search Glossary" name="q"/>
+                            <input type="search" class="form-control" size="50" placeholder="Search NIEM" name="q"/>
                             <input type="hidden"  name="debug" value="false"/>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit">Search</button>
@@ -71,8 +72,10 @@ declare function style:header() as element() {
 declare function style:footer() as element() {
 <div class="footer">
   <center>
+    
+    <span class="title-in-footer">MarkLogic NIEM Tools</span>
+    <span class="title-in-footer">{util:fmt-dateTime(current-dateTime())}</span>
     <a href="http://marklogic.com"><img src="/resources/images/powered-by-marklogic.png"/></a>
-    <span class="title-in-footer">MarkLogic Business Glossary Manager</span>
   </center>
 </div>
 };

@@ -16,6 +16,12 @@ declare function util:fmt-integer($in as item()) as xs:string {
 format-number(number($in), '#,###')
 };
 
+
+(: standard date-time formatting :)
+declare function util:fmt-dateTime($in as item()) as xs:string {
+format-dateTime(xs:dateTime($in), '[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01]')
+};
+
 declare function util:fmt-duration($duration as xs:dayTimeDuration) as xs:string {
 let $total-days := round($duration div xs:dayTimeDuration('P1D'))
 let $total-days-string :=
@@ -93,9 +99,9 @@ declare function util:get-listing($path as xs:string, $end-filter as xs:string?)
   let $module-database := xdmp:modules-database()
   return
     if ($module-database != 0 ) then
-      utl:get-uris($module-database, $path, $end-filter)
+      util:get-uris($module-database, $path, $end-filter)
     else
-      utl:get-files($path, $end-filter)
+      util:get-files($path, $end-filter)
 };
 
 declare function util:get-uris($module-db-id as xs:unsignedLong, $path as xs:string, $end-filter as xs:string?)
