@@ -2,6 +2,7 @@ xquery version "1.0-ml";
 import module namespace search = "http://marklogic.com/appservices/search" at "/MarkLogic/appservices/search/search.xqy";
 import module namespace style = "http://danmccreary.com/style" at "/modules/style.xqy";
 import module namespace xsu = "http://marklogic.com/xml-schema-utilities" at "/modules/xml-schema-utils.xqy"; 
+import module namespace skos-util = "http://marklogic.com/skos-utilities" at "/modules/skos-utils.xqy"; 
 
 declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
@@ -136,7 +137,7 @@ let $content :=
               return
               <div class="exact-match">
                  <span class="field-label">Exact Match:</span>
-                 {xsu:concept-to-html($exact-match/*)}
+                 {skos-util:concept-to-html($exact-match/*)}
               </div>
            else
               ()
