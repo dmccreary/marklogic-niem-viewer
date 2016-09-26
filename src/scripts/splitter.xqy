@@ -1,5 +1,6 @@
 xquery version "1.0-ml";
 import module namespace style = "http://danmccreary.com/style" at "/modules/style.xqy";
+import module namespace xsu = "http://marklogic.com/xml-schema-utilities" at "/modules/xml-schema-utils.xqy"; 
 
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
@@ -24,13 +25,10 @@ let $element-count := count($named-elements)
 let $insert-complex-types :=
    for $complex-type in $named-complex-types
       let $name := $complex-type/@name/string()
+      let $parse-camel-case-name := xsu:camel-case-to-sequence($name)
       let $uri := '/niem-concepts/complex-types/' || $name || '.xml'
       
-      let $skos-concept :=
-      <Concept xmlns="http://www.w3.org/2004/02/skos/core#" about="http://release.niem.gov/niem/niem-core/3.0/complex-type/{$name}">
-         <prefLabel>{$name}</prefLabel>
-         <definition>{$complex-type/xs:annotation/xs:documentation/text()}</definition>
-      </Concept>
+      let $skos-concept := xsu:complex-type-to-skos($complex-type)
       
       let $insert := xdmp:spawn-function(function() {local:insert-document($uri, $skos-concept)},
               <options xmlns="xdmp:eval">
@@ -43,11 +41,7 @@ let $insert-named-elements :=
       let $name := $element/@name/string()
       let $uri := '/niem-concepts/elements/' || $name || '.xml'
       
-      let $skos-concept :=
-      <Concept xmlns="http://www.w3.org/2004/02/skos/core#" about="http://release.niem.gov/niem/niem-core/3.0/element/{$name}">
-         <prefLabel>{$name}</prefLabel>
-         <definition>{$element/xs:annotation/xs:documentation/text()}</definition>
-      </Concept>
+      let $skos-concept := xsu:element-to-skos($element)
       
       let $insert := xdmp:spawn-function(function() {local:insert-document($uri, $skos-concept)},
               <options xmlns="xdmp:eval">

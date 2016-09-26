@@ -44,3 +44,45 @@ declare function xsu:name-score($name as xs:string) {
       else ()
         return concat($has-upper, '-', $has-lower)
 };
+
+
+declare function xsu:complex-type-to-skos($complex-type as element()) {
+   let $name := $complex-type/@name/string()
+   let $parse-camel-case-name := xsu:camel-case-to-sequence($name)
+   let $uri := '/niem-concepts/complex-types/' || $name || '.xml'
+      
+    return
+      <Concept xmlns="http://www.w3.org/2004/02/skos/core#" about="http://release.niem.gov/niem/niem-core/3.0/complex-type/{$name}">
+         <prefLabel>{$name}</prefLabel>
+         <definition>{$complex-type/xs:annotation/xs:documentation/text()}</definition>
+         <broader>{$complex-type/xs:complexContent/xs:extension/@base/string()}</broader>
+         {for $token in $parse-camel-case-name
+            return <altLabel>{$token}</altLabel>
+         }
+      </Concept>
+};
+
+
+declare function xsu:element-to-skos($element as element()) {
+   let $name := $element/@name/string()
+   let $parse-camel-case-name := xsu:camel-case-to-sequence($name)
+   let $last-token := $parse-camel-case-name[last()]
+   let $uri := '/niem-concepts/elements/' || $name || '.xml'
+      
+    return
+      <Concept xmlns="http://www.w3.org/2004/02/skos/core#" about="http://release.niem.gov/niem/niem-core/3.0/complex-type/{$name}">
+         <prefLabel>{$name}</prefLabel>
+         <definition>{$element/xs:annotation/xs:documentation/text()}</definition>
+         <broader>{$element/@type/string()}</broader>
+         {for $token in $parse-camel-case-name
+            return <altLabel>{$token}</altLabel>
+         }
+         { (: if the last token is in our list of representation terms then we add it to the collection via
+             member :)
+           if ($last-token = $xsu:representation-terms)
+            then
+               <member>{$last-token}</member>
+            else ()
+         }
+      </Concept>
+};
