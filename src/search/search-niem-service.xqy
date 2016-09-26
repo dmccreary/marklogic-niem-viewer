@@ -89,6 +89,9 @@ return
  <search:facet name="subject-area" type="xs:string">
     <search:facet-value name="claimadjudicated" count="5">claimadjudicated</search:facet-value>
  :)
+ 
+let $elapsed-time-in-sec := xdmp:elapsed-time() div xs:dayTimeDuration('PT1S')
+
 let $content :=
 <div class="content white-background">
   <div class="row">
@@ -110,7 +113,7 @@ let $content :=
         (concat('Page length: ', $page-length), <br/>)
       }
       
-        <span class="field-label">Total Count:</span> {format-number($count, '#,###')}<br/>
+       {format-number($count, '#,###')} {' '} <span class="field-label">hits</span> in {$elapsed-time-in-sec} seconds.<br/>
         <span class="field-label">Query:</span>"{$q}"<br/>
         <a href="{xdmp:get-request-path()}?debug=true&amp;q={$q}">View Debug</a><br/>
       {
