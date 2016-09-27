@@ -11,28 +11,38 @@ This is a MarkLogic Roxy application for searching and viewing the NIEM.
 
 STEP 1. Clone the project from github using git clone:
 
-```git clone https://github.com/dmccreary/marklogic-niem-viewer```
+```
+git clone https://github.com/dmccreary/marklogic-niem-viewer
+```
 
 STEP 2. Create a local.properties file with the following elements
 
-```user=admin
+```
+user=admin
 password=
 app-port=8140
-xcc-port=8141```
+xcc-port=8141
+```
 
 STEP 3. Run the Roxy bootstrap command and the module and content loader:
 
-```$ ml local bootstrap
+```
+$ ml local bootstrap
 $ ml local deploy content
-$ ml local deploy modules```
+$ ml local deploy modules
+```
 
 STEP 4. Point your browser to your application port:
 
-```http://localhost:8140/```
+```
+http://localhost:8140/
+```
 
 STEP 5. Navigate to the "scripts" area and run the splitter.xqy file:
 
-```http://localhost:8140/scripts/splitter.xqy```
+```
+http://localhost:8140/scripts/splitter.xqy
+```
 
 Your search form in the page header should now work.
 
