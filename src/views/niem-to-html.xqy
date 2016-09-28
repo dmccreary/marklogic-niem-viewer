@@ -17,6 +17,7 @@ declare namespace niem-xsd="http://niem.gov/niem/proxy/xsd/2.0";
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare namespace j="http://niem.gov/niem/domains/jxdm/4.0";
 declare namespace i="http://niem.gov/niem/appinfo/2.0";
+declare option xdmp:output "method=html";
 
 let $title := 'NIEM Object Classe Types to HTML'
 

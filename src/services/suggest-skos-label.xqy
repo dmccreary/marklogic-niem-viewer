@@ -1,12 +1,25 @@
 xquery version "1.0-ml";
 import module namespace search = "http://marklogic.com/appservices/search" at "/MarkLogic/appservices/search/search.xqy";
 
-(: this service returns a JSON document with all the labels in it :)
+(: Suggest SKOS Label service.
+This service returns a JSON array with all SKOS prefLabel in it. 
+It uses search:suggest which assumes a range index on skos:prefLabel
+TODO - create a field of both prefLabel and altLabel
+:)
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
 
 declare option xdmp:output "method=html";
+
+
+let $q := xdmp:get-request-field('q')
+return
+   if (not($q))
+     then
+        <error>
+           <message>Error, q is a required parameter.  Try adding q=per to the URL.</message>
+        </error> else (: continue :)
+
 let $content-type := xdmp:set-response-content-type('application/json')
-let $q := xdmp:get-request-field('q', 'birth')
 let $debug := xs:boolean(xdmp:get-request-field('debug', 'false'))
 
 (: do a simple word query 
@@ -21,7 +34,7 @@ let $options :=
  </default-suggestion-source>
 </search:options>
 
-let $strings := search:suggest($q, $options)
+let $strings := search:suggest($q, $options, 30)
 
 let $sorted-preferred-lables :=
   for $label in $strings

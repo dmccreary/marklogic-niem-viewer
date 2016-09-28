@@ -17,6 +17,9 @@ return
       <title>{$title}</title>
       <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
       <link rel="stylesheet" href="/resources/css/site.css"/>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
    </head>
    <body>
       <div class="container">
@@ -47,7 +50,7 @@ declare function style:header() as element() {
                 <!-- Main Searchbar -->
                     <form class="navbar-form" role="search" action="/search/search-niem-service.xqy">
                         <div class="input-group">
-                            <input type="search" class="form-control" size="50" placeholder="Search NIEM" name="q"/>
+                            <input id="autocomplete" type="search" class="form-control" size="50" placeholder="Search NIEM" name="q"/>
                             <input type="hidden"  name="debug" value="false"/>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default" type="submit">Search</button>
@@ -77,6 +80,18 @@ declare function style:footer() as element() {
     <span class="title-in-footer">{util:fmt-dateTime(current-dateTime())}</span>
     <a href="http://marklogic.com"><img src="/resources/images/powered-by-marklogic.png"/></a>
   </center>
+  <script>
+      $( "#autocomplete" ).autocomplete({{
+        source: function(request, response) {{
+         jQuery.get('/services/suggest-skos-label.xqy', {{
+            q: request.term
+         }}, function(data) {{  
+            response(data);
+         }})
+        }},  
+        minLength: 3
+      }});
+    </script>
 </div>
 };
 

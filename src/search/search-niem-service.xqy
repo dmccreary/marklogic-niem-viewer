@@ -6,6 +6,7 @@ import module namespace skos-util = "http://marklogic.com/skos-utilities" at "/m
 
 declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
+declare option xdmp:output "method=html";
 
 let $title := "NIEM Search Results"
 
