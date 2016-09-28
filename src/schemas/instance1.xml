@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WantList xmlns="http://niem.gov/niem/wantlist/2.2"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://niem.gov/niem/wantlist/2.2 file:/Users/dmccrear/Documents/workspace/marklogic-niem-viewer/src/schemas/wantlist-2.2-annotated.xsd" xmlns:w="http://niem.gov/niem/wantlist/2.2" w:product="product1" w:release="0" w:nillableDefault="false">
+   <Attribute w:name="qName" w:qualifier="qualifier1"/>
+   <Attribute w:name="qName" w:qualifier="qualifier3"/>
+   <Element w:name="qName" w:qualifier="qualifier5" w:isReference="false" w:nillable="false"/>
+   <Element w:name="qName" w:qualifier="qualifier7" w:isReference="false" w:nillable="false"/>
+   <Type w:name="qName" w:isRequested="false">
+      <AttributeInType w:name="qName" w:qualifier="qualifier9" w:minOccurs="50" w:maxOccurs="50"/>
+      <AttributeInType w:name="qName" w:qualifier="qualifier11" w:minOccurs="50" w:maxOccurs="50"/>
+      <ElementInType w:name="qName" w:qualifier="qualifier13" w:isReference="false" w:minOccurs="50" w:maxOccurs="50" w:choice="50"/>
+      <ElementInType w:name="qName" w:qualifier="qualifier15" w:isReference="false" w:minOccurs="50" w:maxOccurs="50" w:choice="50"/>
+      <Facet w:facet="minExclusive" w:value="value1"/>
+      <Facet w:facet="minExclusive" w:value="value3"/>
+      <UnionMember w:type="qName"/>
+      <UnionMember w:type="qName"/>
+   </Type>
+   <Type w:name="qName" w:isRequested="false">
+      <AttributeInType w:name="qName" w:qualifier="qualifier17" w:minOccurs="50" w:maxOccurs="50"/>
+      <AttributeInType w:name="qName" w:qualifier="qualifier19" w:minOccurs="50" w:maxOccurs="50"/>
+      <ElementInType w:name="qName" w:qualifier="qualifier21" w:isReference="false" w:minOccurs="50" w:maxOccurs="50" w:choice="50"/>
+      <ElementInType w:name="qName" w:qualifier="qualifier23" w:isReference="false" w:minOccurs="50" w:maxOccurs="50" w:choice="50"/>
+      <Facet w:facet="minExclusive" w:value="value5"/>
+      <Facet w:facet="minExclusive" w:value="value7"/>
+      <UnionMember w:type="qName"/>
+      <UnionMember w:type="qName"/>
+   </Type>
+</WantList>

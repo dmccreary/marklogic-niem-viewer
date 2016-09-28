@@ -234,7 +234,7 @@ let $content :=
             <span class="field-label">Actions:</span>
             <a class="btn btn-info" role="button" href="/views/view-skos-concept.xqy?uri={$uri}">View Details</a>
             <a class="btn btn-info" role="button" href="/views/view-xml.xqy?uri={$uri}">View XML</a>
-            <a class="btn btn-info" role="button" href="/scripts/add-to-wantlist-list.xqy?uri={$uri}">Add to Wantlist</a>
+            <a class="btn btn-info" role="button" href="/scripts/add-to-wantlist.xqy?uri={$uri}">Add to Wantlist</a>
          </div>
        </div>
       }
