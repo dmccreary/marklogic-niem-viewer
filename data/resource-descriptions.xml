@@ -40,4 +40,9 @@
       <name>Suggest Name</name>
       <description>Service used by the autocomplete search form to suggest a SKOS prefLabel.</description>
    </resource>
+   <resource>
+      <uri>/search/search-niem-service.xqy</uri>
+      <name>Search NIEM</name>
+      <description>Search service.  Requires a "q=" URL parameter.</description>
+   </resource>
 </resource-descriptions>
