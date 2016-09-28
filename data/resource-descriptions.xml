@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource-descriptions>
+   <resource>
+      <uri>/views/metrics.xqy</uri>
+      <name>Metrics</name>
+      <description>Counts of various file types.</description>
+   </resource>
+   <resource>
+      <uri>/views/niem-to-html.xqy</uri>
+      <name>List NIEM Elements</name>
+      <description>HTML list of both Object-Classes and Properties.</description>
+   </resource>
+   <resource>
+      <uri>/views/view-skos-concept.xqy</uri>
+      <name>View NIEM Element</name>
+      <description>View a NIEM element as a SKOS item.  Requires a uri parameter.</description>
+   </resource>
+   <resource>
+      <uri>/views/view-xml.xqy</uri>
+      <name>View XML</name>
+      <description>View a XML file. Requires a uri parameter.</description>
+   </resource>
+   <resource>
+      <uri>/scripts/add-to-wantlist.xqy</uri>
+      <name>Add to WantList</name>
+      <description>Add a NIEM element to your personal wantlist. Requires a uri parameter.</description>
+   </resource>
+   <resource>
+      <uri>/scripts/delete-all-niem-concepts.xqy</uri>
+      <name>Delete NIEM Concept Files</name>
+      <description>Delete all NIEM Concept Files.  Use if you change the splitter.</description>
+   </resource>
+   <resource>
+      <uri>/scripts/splitter.xqy</uri>
+      <name>XML Schema Splitter</name>
+      <description>Convert all complex types and elements with name attributes to SKOS concepts for searching.</description>
+   </resource>
+   <resource>
+      <uri>/services/suggest-skos-label.xqy</uri>
+      <name>Suggest Name</name>
+      <description>Service used by the autocomplete search form to suggest a SKOS prefLabel.</description>
+   </resource>
+</resource-descriptions>

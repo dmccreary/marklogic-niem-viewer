@@ -15,8 +15,9 @@ let $content :=
       using MarkLogic to list and search the NIEM Metadata Registry.</p>
        
       <a href="/views/index.xqy">List Views</a> - Read-only tabular reports and listings.<br/>
+      <a href="/search/index.xqy">List Search Services</a> - Search services.<br/>
+      <a href="/services/index.xqy">List REST Data Services</a> - List REST data services.<br/>
       <a href="/scripts/index.xqy">List Scripts</a> - Scripts that modify the data.<br/>
-      <a href="/services/index.xqy">List Services</a> - List REST data services.<br/>
       <a href="/unit-tests/index.xqy">Unit Tests</a> - Manual unit tests to verify low-level functions.<br/>
       
       Please contact Dan McCreary for questions on the demo.
