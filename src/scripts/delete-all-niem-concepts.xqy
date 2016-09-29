@@ -1,5 +1,6 @@
 xquery version "1.0-ml";
 import module namespace style = "http://danmccreary.com/style" at "/modules/style.xqy";
+declare option xdmp:output "method=html";
 
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";

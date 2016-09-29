@@ -4,12 +4,15 @@ import module namespace xsu = "http://marklogic.com/xml-schema-utilities" at "/m
 
 declare namespace xs="http://www.w3.org/2001/XMLSchema";
 declare namespace skos="http://www.w3.org/2004/02/skos/core#";
+declare option xdmp:output "method=html";
 
 declare function local:insert-document($uri as xs:string, $doc as element()) {
  if (doc-available($uri))
   then ()
   else xdmp:document-insert($uri, $doc, xdmp:default-permissions(), ('data-element'))
 };
+
+
 
 let $title := 'Split NIEM into Documents For Better Search Relevency'
 
